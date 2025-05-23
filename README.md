@@ -8,8 +8,8 @@ Reasoning Guided Universal Visual Grounding with Reinforcement Learning </h1>
 <a href='https://arxiv.org/abs/2505.14231'><img src='https://img.shields.io/badge/Arxiv-2505.14231-A42C25?style=flat&logo=arXiv&logoColor=A42C25'></a>
 <a href='https://amap-ml.github.io/UniVG-R1-page/'>
   <img src='https://img.shields.io/badge/Project-Page-%23df5b46?style=flat&logo=Google%20chrome&logoColor=%23df5b46'></a> 
-<!-- <a href=''><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-blue'></a>
-<a href=''><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Demo-yellow'></a> -->
+<a href='https://huggingface.co/GD-ML/UniVG-R1'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-blue'></a>
+<a href='https://huggingface.co/datasets/GD-ML/UniVG-R1-data'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Dataset-yellow'></a>
 
 <br>
 <div>
@@ -28,8 +28,9 @@ Reasoning Guided Universal Visual Grounding with Reinforcement Learning </h1>
 </div>
 </div>
 
-## ToDo
-- [ ] The code, models, and data will be released soon after a legal inspection.
+## 🎯 ToDo
+- [ ] The code and demo will be released soon after a legal inspection.
+- [x] We release our model and dataset in the Hugging Face.
 - [x] We release our paper in [arxiv](https://arxiv.org/abs/2505.14231).
 
 ## 📖 Overview
@@ -41,7 +42,7 @@ Reasoning Guided Universal Visual Grounding with Reinforcement Learning </h1>
 <img width="650" alt="image" src="figs/pipeline.jpg">
 </div>
 
-## 📈Results
+## 📈 Results
 <div align=center>
 <img width="650" alt="image" src="figs/result1.png">
 </div>
@@ -57,4 +58,16 @@ Zero-shot performance on several reasoning grounding benchmarks.
 
 ## 🌹 Acknowledgement
 Our work is primarily based on [Migician](https://github.com/thunlp/Migician), [VLM-R1](https://github.com/om-ai-lab/VLM-R1), [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory), [lmms-eval](https://github.com/EvolvingLMMs-Lab/lmms-eval). We are sincerely grateful for their excellent works.
+
+## 📚 Citation
+
+If you find our paper and code helpful for your research, please consider starring our repository ⭐ and citing our work ✏️.
+```bibtex
+@article{bai2025univg,
+  title={UniVG-R1: Reasoning Guided Universal Visual Grounding with Reinforcement Learning},
+  author={Bai, Sule and Li, Mingxing and Liu, Yong and Tang, Jing and Zhang, Haoji and Sun, Lei and Chu, Xiangxiang and Tang, Yansong},
+  journal={arXiv preprint arXiv:2505.14231},
+  year={2025}
+}
+```
 

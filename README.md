@@ -10,6 +10,7 @@ Reasoning Guided Universal Visual Grounding with Reinforcement Learning </h1>
   <img src='https://img.shields.io/badge/Project-Page-%23df5b46?style=flat&logo=Google%20chrome&logoColor=%23df5b46'></a> 
 <a href='https://huggingface.co/GD-ML/UniVG-R1'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Models-blue'></a>
 <a href='https://huggingface.co/datasets/GD-ML/UniVG-R1-data'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Dataset-yellow'></a>
+<a href='https://huggingface.co/spaces/SuleBai/UniVG-R1'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Demo-green'></a>
 
 <br>
 <div>
@@ -29,7 +30,8 @@ Reasoning Guided Universal Visual Grounding with Reinforcement Learning </h1>
 </div>
 
 ## 🎯 ToDo
-- [ ] The code and demo will be released soon after a legal inspection.
+- [ ] The code will be released soon after a legal inspection.
+- [x] We release the demo, check it [here](https://huggingface.co/spaces/SuleBai/UniVG-R1).
 - [x] We release our model and dataset in the Hugging Face.
 - [x] We release our paper in [arxiv](https://arxiv.org/abs/2505.14231).
 

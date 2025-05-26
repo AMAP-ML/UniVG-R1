@@ -1,0 +1,154 @@
+import torch
+from transformers import Qwen2VLForConditionalGeneration, AutoProcessor
+from qwen_vl_utils import process_vision_info
+import json
+import os
+from PIL import Image
+import logging
+from tqdm import tqdm
+import re
+import math
+logging.basicConfig(level=logging.INFO)
+torch.manual_seed(1234)
+img2description = dict()
+base_dir = '/path/to/your/ReVOS_eval'
+
+model_path = 'GD-ML/UniVG-R1'
+model = Qwen2VLForConditionalGeneration.from_pretrained(
+    model_path, torch_dtype=torch.bfloat16, device_map="auto", attn_implementation="flash_attention_2"
+).eval()
+
+processor = AutoProcessor.from_pretrained(model_path, max_pixels=640000)
+
+logging.info("Model and processor loaded successfully")
+
+def get_sorted_frames(video_dir):
+    frames = [f for f in os.listdir(video_dir) if f.endswith(('.jpg', '.png'))]
+    frames.sort(key=lambda x: int(re.findall(r'\d+', x)[0]))
+    return frames
+
+def process_image(image_path):
+    if not os.path.exists(image_path):
+        raise FileNotFoundError(f"Image not found: {image_path}")
+    return Image.open(image_path)
+
+def prepare_inputs(img_paths, instruction):
+    messages = [{"role": "user","content": []}]
+
+    for path in img_paths:
+        messages[0]["content"].append({"type": "image", "image": path})
+    messages[0]["content"].append({"type": "text", "text": f'This is a sequence of images from a video. Please understand the entire video content, and then output the bounding box in the third image according to the instruction: {instruction}. First output the thinking process in <think> </think> tags and then output the bounding box in <answer> </answer> tags.'})
+
+    text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+    image_inputs, _ = process_vision_info(messages)
+    inputs = processor(
+        text=[text],
+        images=image_inputs,
+        padding=True,
+        return_tensors="pt",
+    )
+    return inputs.to("cuda")
+
+def extract_bbox(response):
+    try:
+        match = re.search(r"\[(\d+),(\d+),(\d+),(\d+)\]", response)
+        if match:
+            return [int(match.group(i)) for i in range(1, 5)]
+        else:
+            raise ValueError("Invalid response format")
+    except Exception as e:
+        logging.error(f"Error extracting bbox: {e}")
+        return None
+
+def compute_iou(boxA, boxB):
+    xA = max(boxA[0], boxB[0])
+    yA = max(boxA[1], boxB[1])
+    xB = min(boxA[2], boxB[2])
+    yB = min(boxA[3], boxB[3])
+
+    interArea = max(0, xB - xA) * max(0, yB - yA)
+    boxAArea = (boxA[2] - boxA[0]) * (boxA[3] - boxA[1])
+    boxBArea = (boxB[2] - boxB[0]) * (boxB[3] - boxB[1])
+
+    iou = interArea / float(boxAArea + boxBArea - interArea + 1e-6)
+    return iou
+
+def evaluate_model(tasks):
+    results = []
+    box_res =[]
+    for task in tasks:
+        logging.info(f"Processing task: {task}")
+        ious = []
+        screenspot_data = json.load(open(f"/path/to/your/ReVOS_eval.json", 'r'))
+        data_per_gpu = math.ceil(len(screenspot_data) / int(os.environ['SPLIT_NUM']))
+        start_idx = int(os.environ['SPLIT']) * data_per_gpu
+        end_idx = min(start_idx + data_per_gpu, len(screenspot_data))
+        screenspot_data = screenspot_data[start_idx:end_idx]
+        
+        for item in tqdm(screenspot_data):
+            frames = item['frames']
+            try:
+                video_id = item['video_id']
+                video_dir = os.path.join(base_dir, video_id)
+                sorted_frames = get_sorted_frames(video_dir)
+
+                img_paths = []
+                for frame_idx in frames:
+                    frame_name = sorted_frames[frame_idx]
+                    img_path = os.path.join(video_dir, frame_name)
+                    img_paths.append(img_path)
+
+                image = process_image(img_paths[2])
+                w, h = image.size
+                instruction = item["question"]
+                bbox = item["bbox_list"][2]
+
+                bbox = [int(num) for num in bbox]
+                bbox = [
+                    bbox[0] / image.size[0],
+                    bbox[1] / image.size[1],
+                    bbox[2] / image.size[0],
+                    bbox[3] / image.size[1],
+                ]
+                inputs = prepare_inputs(img_paths, instruction)
+
+                with torch.no_grad():
+                    generated_ids = model.generate(**inputs, max_new_tokens=256)
+                response = processor.batch_decode(
+                    generated_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False
+                )[0]
+                print(response)
+                pattern = r"\(\s*(\d+)\s*,\s*(\d+)\s*\)\s*,\s*\(\s*(\d+)\s*,\s*(\d+)\s*\)"
+                matches = re.findall(pattern, response)
+                x1, y1, x2, y2 = map(int, matches[0])
+                pred_bbox = [int(x1) / 1000, int(y1) / 1000, int(x2) / 1000, int(y2) / 1000]
+
+                iou = compute_iou(pred_bbox, bbox)
+                print(iou)
+                box_res.append(
+                    {
+                        "image_pth": item['video_id'],
+                        "pred_bbox": pred_bbox,
+                        "thinking_process": response
+                    }
+                )
+                ious.append(iou)
+            except Exception as e:
+                ious.append(0)
+        json.dump(box_res, open(f"tmp_ours/resbox_{os.environ['SPLIT']}_r1_w_think_7b.json", 'w'), indent=4)
+        json.dump(ious, open(f"tmp_ours/res_{os.environ['SPLIT']}.json", 'w'), indent=4)
+    return
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--task', type=str, default='val')
+    args = parser.parse_args()
+
+    if args.task == "all":
+        tasks = ["val", "test"]
+    else:
+        tasks = [args.task]
+
+    results = evaluate_model(tasks)

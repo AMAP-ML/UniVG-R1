@@ -70,9 +70,9 @@ bash src/open-r1-multimodal/run_scripts/run_grpo_univg.sh
 ```
 
 ## 📊 Evaluation
-For evaluation on the [MIG-bench](https://github.com/thunlp/Migician), please refer to their instructions to set up the environment.
+* For evaluation on the [MIG-Bench](https://github.com/thunlp/Migician), please follow their instructions to set up the environment. And we provide the UniVG-R1 scripts in the `eval` folder. Please replace them in the [Migician](https://github.com/thunlp/Migician) codebase.
+* For zero-shot evaluation, please first download original data, including [LISA](https://github.com/dvlab-research/LISA), [LLMSeg](https://github.com/wangjunchi/LLMSeg), [ReVOS](https://github.com/cilinyan/VISA), [ReasonVOS](https://github.com/showlab/VideoLISA). Then download our extracted bounding box annotations [here](https://huggingface.co/datasets/GD-ML/UniVG-R1-data/tree/main/zero_shot_evaluation).
 
-And we provide the UniVG-R1 scripts in the `eval` folder. Please replace them in the [Migician](https://github.com/thunlp/Migician) codebase.
 
 ## 📈 Results
 <div align=center>
@@ -89,7 +89,7 @@ Zero-shot performance on several reasoning grounding benchmarks.
 </div>
 
 ## 🌹 Acknowledgement
-Our work is primarily based on [Migician](https://github.com/thunlp/Migician), [VLM-R1](https://github.com/om-ai-lab/VLM-R1), [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory), [lmms-eval](https://github.com/EvolvingLMMs-Lab/lmms-eval). We are sincerely grateful for their excellent works.
+Our work is primarily based on [Migician](https://github.com/thunlp/Migician), [VLM-R1](https://github.com/om-ai-lab/VLM-R1), [Visual-RFT](https://github.com/Liuziyu77/Visual-RFT), [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory), [lmms-eval](https://github.com/EvolvingLMMs-Lab/lmms-eval). We are sincerely grateful for their excellent works.
 
 ## 📚 Citation
 

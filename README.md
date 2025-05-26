@@ -30,8 +30,8 @@ Reasoning Guided Universal Visual Grounding with Reinforcement Learning </h1>
 </div>
 
 ## 🎯 ToDo
-- [ ] The code will be released soon after a legal inspection.
-- [x] We release the demo, check it [here](https://huggingface.co/spaces/SuleBai/UniVG-R1).
+- [x] We release the demo, check it [here](https://huggingface.co/spaces/SuleBai/UniVG-R1). 🔥🔥🔥
+- [x] We release our code.
 - [x] We release our model and dataset in the Hugging Face.
 - [x] We release our paper in [arxiv](https://arxiv.org/abs/2505.14231).
 
@@ -43,6 +43,31 @@ Reasoning Guided Universal Visual Grounding with Reinforcement Learning </h1>
 <div align=center>
 <img width="650" alt="image" src="figs/pipeline.jpg">
 </div>
+
+## 🛠️ Installation
+Our code is based on [VLM-R1](https://github.com/om-ai-lab/VLM-R1), please follow their instrcutions.
+```bash
+conda create -n vlm-r1 python=3.10
+conda activate vlm-r1
+bash setup.sh
+```
+
+## 💪🏻 Training
+#### 📚 Stage1 CoT-SFT
+
+1. Download the [Stage 1 CoT-SFT Data](https://huggingface.co/datasets/GD-ML/UniVG-R1-data/blob/main/stage1_cotsft.json) and the [MGrounding-630k dataset](https://github.com/thunlp/Migician/tree/main).
+2. We use the [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) for supervised fine-tuning. Please follow their instructions to set up the environment.
+
+```bash
+llamafactory-cli train sft/stage1_cotsft.yaml
+```
+#### 📚 Stage2 GRPO
+
+1. Download the [Stage 2 RL Data](https://huggingface.co/datasets/GD-ML/UniVG-R1-data/blob/main/stage2_rl.json) and the [MGrounding-630k dataset](https://github.com/thunlp/Migician/tree/main).
+
+```bash
+bash src/open-r1-multimodal/run_scripts/run_grpo_univg.sh
+```
 
 ## 📈 Results
 <div align=center>

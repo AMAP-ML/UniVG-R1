@@ -1,0 +1,43 @@
+### model
+model_name_or_path: Qwen2-VL-7B-Instruct
+
+## method
+stage: sft
+do_train: true
+finetuning_type: full
+deepspeed: examples/deepspeed/ds_z3_config.json
+print_param_status: false
+freeze_vision_tower: true
+flash_attn: fa2
+
+### dataset
+dataset: stage1_cotsft
+template: qwen2_vl
+
+# non-streaming mode
+cutoff_len: 6000
+# max_samples: 1100000
+image_max_pixels: 401408
+overwrite_cache: true
+preprocessing_num_workers: 128
+num_train_epochs: 1.0
+
+report_to: wandb
+run_name: Qwen2-VL_7b_stage1_cotsft
+
+### output
+output_dir: Qwen2-VL_7b_stage1_cotsft
+logging_steps: 1
+save_steps: 800
+plot_loss: true
+save_only_model: true
+overwrite_output_dir: true
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 3
+learning_rate: 5.0e-6
+lr_scheduler_type: cosine
+warmup_ratio: 0.015
+bf16: true
+ddp_timeout: 180000000

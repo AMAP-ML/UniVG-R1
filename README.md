@@ -47,8 +47,8 @@ Reasoning Guided Universal Visual Grounding with Reinforcement Learning </h1>
 ## 🛠️ Installation
 Our code is based on [VLM-R1](https://github.com/om-ai-lab/VLM-R1), please follow their instrcutions.
 ```bash
-conda create -n vlm-r1 python=3.10
-conda activate vlm-r1
+conda create -n univg-r1 python=3.10
+conda activate univg-r1
 bash setup.sh
 ```
 

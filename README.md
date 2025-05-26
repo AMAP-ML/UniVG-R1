@@ -55,7 +55,7 @@ bash setup.sh
 ## 💪🏻 Training
 #### 📚 Stage1 CoT-SFT
 
-1. Download the [Stage 1 CoT-SFT Data](https://huggingface.co/datasets/GD-ML/UniVG-R1-data/blob/main/stage1_cotsft.json) and the [MGrounding-630k dataset](https://github.com/thunlp/Migician/tree/main).
+1. Download the [Stage 1 CoT-SFT Data](https://huggingface.co/datasets/GD-ML/UniVG-R1-data/blob/main/stage1_cotsft.json) and the [MGrounding-630k dataset](https://github.com/thunlp/Migician).
 2. We use the [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) for supervised fine-tuning. Please follow their instructions to set up the environment.
 
 ```bash
@@ -68,6 +68,11 @@ llamafactory-cli train sft/stage1_cotsft.yaml
 ```bash
 bash src/open-r1-multimodal/run_scripts/run_grpo_univg.sh
 ```
+
+## 📊 Evaluation
+For evaluation on the [MIG-bench](https://github.com/thunlp/Migician), please refer to their instructions to set up the environment.
+
+And we provide the UniVG-R1 scripts in the `eval` folder. Please replace them in the [Migician](https://github.com/thunlp/Migician) codebase.
 
 ## 📈 Results
 <div align=center>

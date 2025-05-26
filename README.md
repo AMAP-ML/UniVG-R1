@@ -53,7 +53,7 @@ bash setup.sh
 ```
 
 ## 💪🏻 Training
-#### 📚 Stage1 CoT-SFT
+#### 📚 Stage 1 CoT-SFT
 
 1. Download the [Stage 1 CoT-SFT Data](https://huggingface.co/datasets/GD-ML/UniVG-R1-data/blob/main/stage1_cotsft.json) and the [MGrounding-630k dataset](https://github.com/thunlp/Migician).
 2. We use the [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) for supervised fine-tuning. Please follow their instructions to set up the environment.
@@ -61,7 +61,7 @@ bash setup.sh
 ```bash
 llamafactory-cli train sft/stage1_cotsft.yaml
 ```
-#### 📚 Stage2 GRPO
+#### 📚 Stage 2 GRPO
 
 1. Download the [Stage 2 RL Data](https://huggingface.co/datasets/GD-ML/UniVG-R1-data/blob/main/stage2_rl.json) and the [MGrounding-630k dataset](https://github.com/thunlp/Migician/tree/main).
 

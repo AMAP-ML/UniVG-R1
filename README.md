@@ -45,12 +45,17 @@ Reasoning Guided Universal Visual Grounding with Reinforcement Learning </h1>
 </div>
 
 ## 🛠️ Installation
-Our code is based on [VLM-R1](https://github.com/om-ai-lab/VLM-R1), please follow their instrcutions.
+Our code is based on [VLM-R1](https://github.com/om-ai-lab/VLM-R1), please follow their instrcutions to set up the environment.
 ```bash
 conda create -n univg-r1 python=3.10
 conda activate univg-r1
 bash setup.sh
 ```
+
+## 🔥 Demo
+We provide an online demo on [🤗Huggingface](https://huggingface.co/spaces/SuleBai/UniVG-R1) for convenience.
+
+If you want to test locally, you can use the `demo.py`.
 
 ## 💪🏻 Training
 #### 📚 Stage 1 CoT-SFT
@@ -81,6 +86,7 @@ bash src/open-r1-multimodal/run_scripts/run_grpo_univg.sh
 <div align="center">
 Performance on the MIG-Bench.
 </div>
+<br>
 <div align=center>
 <img width="650" alt="image" src="figs/result2.png">
 </div>

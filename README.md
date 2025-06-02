@@ -29,12 +29,6 @@ Reasoning Guided Universal Visual Grounding with Reinforcement Learning </h1>
 </div>
 </div>
 
-## 🎯 ToDo
-- [x] We release the demo, check it [here](https://huggingface.co/spaces/SuleBai/UniVG-R1). 🔥🔥🔥
-- [x] We release our code.
-- [x] We release our model and dataset in the Hugging Face.
-- [x] We release our paper in [arxiv](https://arxiv.org/abs/2505.14231).
-
 ## 📖 Overview
 1. We propose UniVG-R1, a reasoning guided MLLM for universal visual grounding, which employs GRPO with a cold-start initialization to effectively enhance reasoning capabilities across multimodal contexts.
 2. A high-quality CoT dataset is introduced, encompassing diverse tasks, each meticulously annotated with detailed reasoning chains to facilitate advanced reasoning-based grounding.
@@ -44,6 +38,11 @@ Reasoning Guided Universal Visual Grounding with Reinforcement Learning </h1>
 <img width="650" alt="image" src="figs/pipeline.jpg">
 </div>
 
+## 🔥 Demo
+We provide an online demo on [🤗Huggingface](https://huggingface.co/spaces/SuleBai/UniVG-R1) for convenience.
+
+If you want to test locally, you can use the `demo.py`.
+
 ## 🛠️ Installation
 Our code is based on [VLM-R1](https://github.com/om-ai-lab/VLM-R1), please follow their instrcutions to set up the environment.
 ```bash
@@ -51,11 +50,6 @@ conda create -n univg-r1 python=3.10
 conda activate univg-r1
 bash setup.sh
 ```
-
-## 🔥 Demo
-We provide an online demo on [🤗Huggingface](https://huggingface.co/spaces/SuleBai/UniVG-R1) for convenience.
-
-If you want to test locally, you can use the `demo.py`.
 
 ## 💪🏻 Training
 #### 📚 Stage 1 CoT-SFT
